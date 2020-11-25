@@ -59,7 +59,7 @@ const SingleCourse = ({
 				color="primary"
 				className="float-right"
 				tag={Link}
-				to={`/courses/${id}/${encodeURI(title.trim().replace(/\s+/g, '-'))}`}
+				to={`/courses/${id}/${encodeURI(title?.trim().replace(/\s+/g, '-'))}`}
 			>
 				View
 			</Button>

@@ -2,12 +2,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { TiCancel, TiTick } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'reactstrap';
+import DeleteModal from '../components/DeleteModal';
+import RecordNotFound from '../components/RecordNotFound';
 import {
 	fetchCourse,
 	fetchCourseFromCourses,
 } from '../redux/actions/courseActions';
+import { deleteCourse, fetchCourses } from '../redux/actions/coursesActions';
 import { URL } from '../redux/constants';
 
 const Course = () => {
@@ -16,6 +19,7 @@ const Course = () => {
 	const courses = useSelector((state) => state.coursesReducer);
 	const course = useSelector((state) => state.courseReducer);
 	const [instructors, setInstructors] = useState();
+	const history = useHistory();
 
 	const handleCourse = () => {
 		const courseFromMemory = courses.data.find((x) => x.id === id);
@@ -27,6 +31,7 @@ const Course = () => {
 	};
 
 	useEffect(() => {
+		if (!courses.fetched) dispatch(fetchCourses());
 		handleCourse();
 	}, []);
 
@@ -44,7 +49,13 @@ const Course = () => {
 			.catch((err) => console.log(err));
 	}, [course.data.instructors]);
 
-	return (
+	function handleEdit() {
+		history.push(`/courses/edit/${id}`);
+	}
+
+	return course.hasErrors ? (
+		<RecordNotFound />
+	) : (
 		<Container>
 			<div className="h2 font-weight-normal mt-4">{course.data.title}</div>
 			<img
@@ -75,10 +86,16 @@ const Course = () => {
 				</Row>
 			</div>
 			<div dangerouslySetInnerHTML={{ __html: course.data.description }}></div>
-			<div>
-				<Button color="primary">Edit</Button>{' '}
-				<Button color="danger">Delete</Button>{' '}
+
+			<Button color="primary" onClick={handleEdit}>
+				Edit
+			</Button>
+			<div className="d-inline-block ml-2">
+				<DeleteModal id={id} buttonLabel="Delete">
+					Delete
+				</DeleteModal>
 			</div>
+
 			<div className="h2 font-weight-normal my-4">Instructors</div>
 			<Row>
 				{instructors?.map((instructor) => (

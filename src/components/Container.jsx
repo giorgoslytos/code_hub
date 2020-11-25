@@ -34,7 +34,7 @@ const NavbarComponent = (props) => {
 							Courses
 						</NavLink>
 						<NavItem>
-							<NavLink tag={Link} to="/courses/new">
+							<NavLink tag={Link} to="/courses/add">
 								Add new course
 							</NavLink>
 						</NavItem>

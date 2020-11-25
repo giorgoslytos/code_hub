@@ -19,7 +19,8 @@ ReactDOM.render(
 				<Switch>
 					<Route exact path={['/', '/homepage']} component={Dashboard} />
 					<Route exact path={'/courses'} component={Courses} />
-					<Route exact path={'/courses/new'} component={AddEditCourse} />
+					<Route exact path={'/courses/add'} component={AddEditCourse} />
+					<Route exact path={'/courses/edit/:id'} component={AddEditCourse} />
 					<Route path={'/courses/:id'} component={Course} />
 					<Route exact component={NotFoundPage} />
 				</Switch>
