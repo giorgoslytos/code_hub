@@ -34,7 +34,10 @@ const NavbarComponent = (props) => {
 							Courses
 						</NavLink>
 						<NavItem>
-							<NavLink tag={Link} to="/courses/add">
+							<NavLink
+								tag={Link}
+								to={{ pathname: '/courses/add', course: { mode: 'add' } }}
+							>
 								Add new course
 							</NavLink>
 						</NavItem>

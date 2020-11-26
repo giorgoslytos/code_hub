@@ -57,3 +57,22 @@ export const deleteCourse = (id) => async (dispatch) => {
 		console.log(err);
 	}
 };
+
+export const editCourse = (course) => async (dispatch) => {
+	dispatch({
+		type: 'EDIT_COURSE_LOADING',
+	});
+	try {
+		const res = await axios.put(`${URL}/courses/${course.id}`, course);
+		console.log(res);
+		dispatch({
+			type: 'EDIT_COURSE_SUCCESS',
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: 'EDIT_COURSE_FAILURE',
+		});
+		console.log(err);
+	}
+};

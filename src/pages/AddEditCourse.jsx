@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
 	Button,
 	Card,
@@ -11,44 +11,45 @@ import {
 import { Formik, Field, Form } from 'formik';
 import addEditvalidationSchema from '../utils/addEditvalidationSchema';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCourse } from '../redux/actions/coursesActions';
+import { addCourse, editCourse } from '../redux/actions/coursesActions';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { fetchCourse } from '../redux/actions/courseActions';
+import { fetchCourses } from '../redux/actions/coursesActions';
+import NotFoundPage from './NotFoundPage';
 
 const AddEditCourse = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { id } = useParams();
 	const location = useLocation();
-	const course = useSelector((state) => state.courseReducer);
+	// const course = useSelector((state) => state.courseReducer);
+	// const courses = useSelector((state) => state.coursesReducer);
+	const state = history.location.state;
 
-	useEffect(() => {
-		console.log(id);
-		console.log(location);
-		dispatch(fetchCourse(id));
-	}, []);
-
-	useEffect(() => {
-		console.log(course?.data?.title);
-	}, [course]);
-
-	return (
+	return state?.course.data || history.location.pathname === '/courses/add' ? (
 		<Formik
 			initialValues={{
-				title: course?.data?.title,
-				duration: course.duration,
-				imagePath: '',
-				open: false,
-				instructors: [],
-				description: '',
-				dates: { start_date: '', end_date: '' },
-				price: { normal: 0, early_bird: 0 },
+				title: state?.course.data.title,
+				duration: state?.course.data.duration,
+				imagePath: state?.course.data.imagePath,
+				open: state?.course.data.open,
+				instructors: state?.course.data.instructors,
+				description: state?.course.data.description,
+				dates: {
+					start_date: state?.course.data.dates?.start_date,
+					end_date: state?.course.data.dates?.end_date,
+				},
+				price: {
+					normal: state?.course.data.price?.normal,
+					early_bird: state?.course.data.price?.early_bird,
+				},
 			}}
 			onSubmit={(data, { setSubmitting }) => {
 				setSubmitting(true);
 				// make async call
-				console.log(data);
-				dispatch(addCourse(data));
+				history.location.pathname === '/courses/add'
+					? dispatch(addCourse(data))
+					: dispatch(editCourse({ ...data, id }));
 				setSubmitting(false);
 				history.push('/courses/');
 			}}
@@ -191,13 +192,17 @@ const AddEditCourse = () => {
 								color="primary float-right"
 								disabled={Object.keys(errors).length !== 0}
 							>
-								Add Course
+								{history.location.pathname === '/courses/add'
+									? 'Add Course'
+									: 'Edit Course'}
 							</Button>
 						</Form>
 					</Card>
 				</Container>
 			)}
 		</Formik>
+	) : (
+		<NotFoundPage />
 	);
 };
 

@@ -50,7 +50,10 @@ const Course = () => {
 	}, [course.data.instructors]);
 
 	function handleEdit() {
-		history.push(`/courses/edit/${id}`);
+		history.push({
+			pathname: `/courses/edit/${id}`,
+			state: { course },
+		});
 	}
 
 	return course.hasErrors ? (

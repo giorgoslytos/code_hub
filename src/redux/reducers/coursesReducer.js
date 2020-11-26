@@ -43,6 +43,20 @@ const coursesReducer = (state = initialState, { type, payload }) => {
 			};
 		case 'DELETE_COURSE_FAILURE':
 			return { ...state, loading: false };
+		// EDIT COURSE
+		case 'EDIT_COURSE_LOADING':
+			return { ...state, loading: true };
+		case 'EDIT_COURSE_SUCCESS':
+			return {
+				data: state.data.map((record) =>
+					record.id !== payload.id ? record : payload
+				),
+				loading: false,
+				hasErrors: false,
+				fetched: true,
+			};
+		case 'EDIT_COURSE_FAILURE':
+			return { ...state, loading: false };
 		default:
 			return state;
 	}
