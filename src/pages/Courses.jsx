@@ -36,7 +36,11 @@ const SingleCourse = ({
 		<CardImg
 			top
 			width="100%"
-			src={process.env.PUBLIC_URL + imagePath}
+			src={
+				process.env.PUBLIC_URL + imagePath !== ''
+					? imagePath
+					: '/imageNotFound.jpg'
+			}
 			alt="Card image cap"
 		/>
 		<CardBody>
