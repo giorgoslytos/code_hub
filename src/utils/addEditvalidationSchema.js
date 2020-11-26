@@ -4,6 +4,7 @@ const addEditvalidationSchema = yup.object({
 	title: yup.string().required('Title is arequired').max(50),
 	duration: yup.string().required('Duration is required').max(40),
 	description: yup.string().required('Description is required'),
+	imagePath: yup.string(),
 	instructors: yup
 		.array()
 		.required()

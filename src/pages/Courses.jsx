@@ -16,6 +16,7 @@ import {
 	Container,
 	Row,
 } from 'reactstrap';
+import WithLoader from '../components/WithLoader';
 import { fetchCourses } from '../redux/actions/coursesActions';
 
 const SingleCourse = ({
@@ -37,9 +38,10 @@ const SingleCourse = ({
 			top
 			width="100%"
 			src={
-				process.env.PUBLIC_URL + imagePath !== ''
+				process.env.PUBLIC_URL +
+				(imagePath !== undefined && imagePath !== ''
 					? imagePath
-					: '/imageNotFound.jpg'
+					: '/imageNotFound.jpg')
 			}
 			alt="Card image cap"
 		/>
@@ -83,11 +85,13 @@ const Courses = () => {
 		<Container>
 			<h1 className="h2 font-weight-normal mt-4 mb-2">All Courses</h1>
 			<Row>
-				{courses.data.map((course, index) => (
-					<Col xs={12} md={6} lg={4} className="my-3" key={course.id}>
-						<SingleCourse {...course} />
-					</Col>
-				))}
+				<WithLoader loading={courses?.loading}>
+					{courses.data.map((course, index) => (
+						<Col xs={12} md={6} lg={4} className="my-3" key={course.id}>
+							<SingleCourse {...course} />
+						</Col>
+					))}
+				</WithLoader>
 			</Row>
 		</Container>
 	);

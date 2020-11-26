@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Container, NavbarText } from 'reactstrap';
 import {
 	Collapse,
 	Navbar,
@@ -47,6 +47,9 @@ const NavbarComponent = (props) => {
 			<Container fluid className="mb-4">
 				{props.children}
 			</Container>
+			<div className="text-center my-4">
+				Created by George Litos for the Code Hub React Workshop, 2020
+			</div>
 		</>
 	);
 };

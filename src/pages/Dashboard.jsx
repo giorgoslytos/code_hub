@@ -13,6 +13,7 @@ import DataTable from '../components/DataTable';
 import Spinner from '../components/Spinner';
 import { fetchStats } from '../redux/actions/statsActions';
 import { fetchCourses } from '../redux/actions/coursesActions';
+import WithLoader from '../components/WithLoader';
 
 const Dashboard = () => {
 	const dispatch = useDispatch();
@@ -33,8 +34,8 @@ const Dashboard = () => {
 				<p>Manage everything and have fun!</p>
 			</Jumbotron>
 			<Row>
-				{!stats.loading ? (
-					stats.data?.map((stat) => (
+				<WithLoader loading={stats?.loading}>
+					{stats.data?.map((stat) => (
 						<Col style={{ padding: '15px' }} key={stat.id}>
 							<Card>
 								<CardBody>
@@ -43,12 +44,12 @@ const Dashboard = () => {
 								</CardBody>
 							</Card>
 						</Col>
-					))
-				) : (
-					<Spinner />
-				)}
+					))}
+				</WithLoader>
 			</Row>
-			<DataTable data={courses.data.slice(0, 5)} />
+			<WithLoader loading={courses?.loading}>
+				<DataTable data={courses.data.slice(0, 5)} />
+			</WithLoader>
 		</div>
 	);
 };
