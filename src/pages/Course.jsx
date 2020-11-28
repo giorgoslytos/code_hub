@@ -29,17 +29,14 @@ const Course = () => {
 		} else {
 			dispatch(fetchCourse(id));
 		}
+		fetchInstructors();
 	};
 
-	useEffect(() => {
-		handleCourse();
-	}, []);
-
-	useEffect(() => {
+	const fetchInstructors = async () => {
 		const promises = course.data.instructors?.map((id) =>
 			axios.get(`${URL}/instructors/${id}`)
 		);
-		axios
+		await axios
 			.all(promises)
 			.then(
 				axios.spread((...responses) =>
@@ -47,7 +44,11 @@ const Course = () => {
 				)
 			)
 			.catch((err) => console.log(err));
-	}, [course.data.instructors]);
+	};
+
+	useEffect(() => {
+		handleCourse();
+	}, []);
 
 	function handleEdit() {
 		history.push({
