@@ -24,6 +24,11 @@ const AddEditCourse = () => {
 	// const courses = useSelector((state) => state.coursesReducer);
 	const state = history.location.state;
 
+	const instructorsArr = [
+		{ id: '01', name: 'John Tsevdos' },
+		{ id: '02', name: 'Yiannis Nikolakopoulos' },
+	];
+
 	return state?.course.data || history.location.pathname === '/courses/add' ? (
 		<Formik
 			initialValues={{
@@ -98,28 +103,19 @@ const AddEditCourse = () => {
 							<hr />
 							<div className="h3 font-weight-normal">Instructors</div>
 							<FormGroup check>
-								<div>
-									<Label check>
-										<Field
-											type="checkbox"
-											name="instructors"
-											value="01"
-											as={Input}
-										/>{' '}
-										John Tsevdos
-									</Label>
-								</div>
-								<div>
-									<Label check>
-										<Field
-											type="checkbox"
-											name="instructors"
-											value="02"
-											as={Input}
-										/>
-										Yiannis Nikolakopoulos
-									</Label>
-								</div>
+								{instructorsArr.map((instructor) => (
+									<div>
+										<Label check>
+											<Field
+												type="checkbox"
+												name="instructors"
+												value={instructor.id}
+												as={Input}
+											/>
+											{instructor.name}
+										</Label>
+									</div>
+								))}
 								<p className="text-danger">
 									<small>{errors.instructors}</small>
 								</p>
