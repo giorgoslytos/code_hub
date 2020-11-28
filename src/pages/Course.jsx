@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'reactstrap';
 import DeleteModal from '../components/DeleteModal';
+import LazyImage from '../components/LazyImage';
 import RecordNotFound from '../components/RecordNotFound';
 import WithLoader from '../components/WithLoader';
 import {
 	fetchCourse,
 	fetchCourseFromCourses,
 } from '../redux/actions/courseActions';
-import { deleteCourse, fetchCourses } from '../redux/actions/coursesActions';
-import { URL } from '../redux/constants';
 
 const Course = () => {
 	const { id } = useParams();
@@ -21,6 +20,7 @@ const Course = () => {
 	const course = useSelector((state) => state.courseReducer);
 	const [instructors, setInstructors] = useState();
 	const history = useHistory();
+	const URL = process.env.REACT_APP_URL;
 
 	const handleCourse = () => {
 		const courseFromMemory = courses.data.find((x) => x.id === id);
@@ -62,16 +62,16 @@ const Course = () => {
 		<WithLoader loading={course?.loading}>
 			<Container>
 				<div className="h2 font-weight-normal mt-4">{course.data.title}</div>
-				<img
+				<LazyImage
+					effect="blur"
 					width="100%"
-					src={process.env.PUBLIC_URL + course.data.imagePath}
 					src={
 						process.env.PUBLIC_URL +
 						(course.data.imagePath !== undefined && course.data.imagePath !== ''
 							? course.data.imagePath
 							: '/imageNotFound.jpg')
 					}
-					alt="Card image cap"
+					alt="Card cap"
 					style={{ height: '300px' }}
 				/>
 				<hr />
@@ -110,22 +110,28 @@ const Course = () => {
 
 				<div className="h2 font-weight-normal my-4">Instructors</div>
 				<Row>
-					{instructors?.map((instructor) => (
-						<Col xs={12} md={6} key={instructor.id}>
-							<div className="h3 font-weight-normal">
-								{instructor.name.first} {instructor.name.last}{' '}
-								<span className="h4 font-weight-normal">
-									({instructor.dob})
-								</span>
-							</div>
-							<p>
-								Email:{' '}
-								<a href={`mailto: ${instructor.email}`}>{instructor.email}</a> |
-								<a href={instructor.linkedin}> LinkedIn</a>
-							</p>
-							<p>{instructor.bio}</p>
-						</Col>
-					))}
+					<WithLoader loading={!instructors}>
+						<>
+							{instructors?.map((instructor) => (
+								<Col xs={12} md={6} key={instructor.id}>
+									<div className="h3 font-weight-normal">
+										{instructor.name.first} {instructor.name.last}{' '}
+										<span className="h4 font-weight-normal">
+											({instructor.dob})
+										</span>
+									</div>
+									<p>
+										Email:{' '}
+										<a href={`mailto: ${instructor.email}`}>
+											{instructor.email}
+										</a>{' '}
+										|<a href={instructor.linkedin}> LinkedIn</a>
+									</p>
+									<p>{instructor.bio}</p>
+								</Col>
+							))}
+						</>
+					</WithLoader>
 				</Row>
 			</Container>
 		</WithLoader>

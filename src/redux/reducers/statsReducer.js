@@ -1,3 +1,9 @@
+import {
+	GET_STATS_LOADING,
+	GET_STATS_SUCCESS,
+	GET_STATS_FAILURE,
+} from '../action-types';
+
 const initialState = {
 	data: [],
 	loading: false,
@@ -8,16 +14,16 @@ const initialState = {
 const statsReducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		// GET ALL STATS
-		case 'GET_STATS_LOADING':
+		case GET_STATS_LOADING:
 			return { ...state, loading: true };
-		case 'GET_STATS_SUCCESS':
+		case GET_STATS_SUCCESS:
 			return {
 				data: payload,
 				loading: false,
 				hasErrors: false,
 				fetched: true,
 			};
-		case 'GET_STATS_FAILURE':
+		case GET_STATS_FAILURE:
 			return { ...state, loading: false, hasErrors: true };
 		default:
 			return state;

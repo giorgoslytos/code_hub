@@ -1,16 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	Badge,
-	Card,
-	CardBody,
-	CardText,
-	Col,
-	Jumbotron,
-	Row,
-} from 'reactstrap';
+import { Badge, Card, CardBody, Col, Jumbotron, Row } from 'reactstrap';
 import DataTable from '../components/DataTable';
-import Spinner from '../components/Spinner';
 import { fetchStats } from '../redux/actions/statsActions';
 import { fetchCourses } from '../redux/actions/coursesActions';
 import WithLoader from '../components/WithLoader';

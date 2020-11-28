@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink as Link } from 'react-router-dom';
-import { Container, NavbarText } from 'reactstrap';
+import { Container } from 'reactstrap';
 import {
 	Collapse,
 	Navbar,

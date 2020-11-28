@@ -1,22 +1,27 @@
 import axios from 'axios';
-import { URL } from '../constants';
+import {
+	GET_STATS_LOADING,
+	GET_STATS_SUCCESS,
+	GET_STATS_FAILURE,
+} from '../action-types';
+const URL = process.env.REACT_APP_URL;
 
 export const fetchStats = () => async (dispatch) => {
 	dispatch({
-		type: 'GET_STATS_LOADING',
+		type: GET_STATS_LOADING,
 	});
 	try {
 		const res = await axios.get(`${URL}/stats`);
 		console.log(res);
 		const data = res.data;
 		dispatch({
-			type: 'GET_STATS_SUCCESS',
+			type: GET_STATS_SUCCESS,
 			payload: data,
 		});
 	} catch (err) {
 		dispatch({
-			type: 'GET_STATS_FAILURE',
+			type: GET_STATS_FAILURE,
 		});
-		console.log(err);
+		console.error(err);
 	}
 };

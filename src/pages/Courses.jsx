@@ -6,16 +6,15 @@ import {
 	Button,
 	Card,
 	CardBody,
-	CardDeck,
 	CardHeader,
 	CardImg,
-	CardSubtitle,
 	CardText,
 	CardTitle,
 	Col,
 	Container,
 	Row,
 } from 'reactstrap';
+import LazyImage from '../components/LazyImage';
 import WithLoader from '../components/WithLoader';
 import { fetchCourses } from '../redux/actions/coursesActions';
 
@@ -34,7 +33,8 @@ const SingleCourse = ({
 				{title}
 			</CardTitle>
 		</CardHeader>
-		<CardImg
+		<LazyImage
+			effect="blur"
 			top
 			width="100%"
 			src={

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
 	Button,
 	Card,
@@ -13,8 +13,6 @@ import addEditvalidationSchema from '../utils/addEditvalidationSchema';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCourse, editCourse } from '../redux/actions/coursesActions';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { fetchCourse } from '../redux/actions/courseActions';
-import { fetchCourses } from '../redux/actions/coursesActions';
 import NotFoundPage from './NotFoundPage';
 
 const AddEditCourse = () => {
