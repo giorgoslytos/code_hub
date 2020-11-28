@@ -11,7 +11,10 @@ const addEditvalidationSchema = yup.object({
 		.min(1, 'At least one instructor should be selected'),
 	dates: yup.object().shape({
 		start_date: yup.date().required('Starting Date is required'),
-		end_date: yup.date().required('Ending Date is required'),
+		end_date: yup
+			.date()
+			.required('Ending Date is required')
+			.min(yup.ref('start_date'), "End date can't be before start date"),
 	}),
 	price: yup.object().shape({
 		normal: yup

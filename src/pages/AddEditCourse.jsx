@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 import { Formik, Field, Form } from 'formik';
 import addEditvalidationSchema from '../utils/addEditvalidationSchema';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addCourse, editCourse } from '../redux/actions/coursesActions';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import NotFoundPage from './NotFoundPage';
@@ -19,32 +19,33 @@ const AddEditCourse = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { id } = useParams();
-	const location = useLocation();
-	// const course = useSelector((state) => state.courseReducer);
-	// const courses = useSelector((state) => state.coursesReducer);
-	const state = history.location.state;
+	const course = history.location.state;
 
 	const instructorsArr = [
 		{ id: '01', name: 'John Tsevdos' },
 		{ id: '02', name: 'Yiannis Nikolakopoulos' },
 	];
 
-	return state?.course.data || history.location.pathname === '/courses/add' ? (
+	function handleCancel() {
+		history.goBack();
+	}
+
+	return course || history.location.pathname === '/courses/add' ? (
 		<Formik
 			initialValues={{
-				title: state?.course.data.title,
-				duration: state?.course.data.duration,
-				imagePath: state?.course.data.imagePath,
-				open: state?.course.data.open,
-				instructors: state?.course.data.instructors,
-				description: state?.course.data.description,
+				title: course?.title,
+				duration: course?.duration,
+				imagePath: course?.imagePath,
+				open: course?.open,
+				instructors: course?.instructors,
+				description: course?.description,
 				dates: {
-					start_date: state?.course.data.dates?.start_date,
-					end_date: state?.course.data.dates?.end_date,
+					start_date: course?.dates?.start_date,
+					end_date: course?.dates?.end_date,
 				},
 				price: {
-					normal: state?.course.data.price?.normal,
-					early_bird: state?.course.data.price?.early_bird,
+					normal: course?.price?.normal,
+					early_bird: course?.price?.early_bird,
 				},
 			}}
 			onSubmit={(data, { setSubmitting }) => {
@@ -54,7 +55,7 @@ const AddEditCourse = () => {
 					? dispatch(addCourse(data))
 					: dispatch(editCourse({ ...data, id }));
 				setSubmitting(false);
-				history.push('/courses/');
+				history.push('/');
 			}}
 			validationSchema={addEditvalidationSchema}
 		>
@@ -180,16 +181,22 @@ const AddEditCourse = () => {
 								<FormFeedback>{errors.price?.normal}</FormFeedback>
 							</FormGroup>
 							<hr />
-							<Button
-								type="submit"
-								disabled={isSubmitting}
-								color="primary float-right"
-								disabled={Object.keys(errors).length !== 0}
-							>
-								{history.location.pathname === '/courses/add'
-									? 'Add Course'
-									: 'Edit Course'}
-							</Button>
+							<div className="d-flex justify-content-end">
+								<Button color="danger" type="button" onClick={handleCancel}>
+									Cancel
+								</Button>
+								<Button
+									type="submit"
+									className="ml-2"
+									disabled={isSubmitting}
+									color="primary float-right"
+									disabled={Object.keys(errors).length !== 0}
+								>
+									{history.location.pathname === '/courses/add'
+										? 'Add Course'
+										: 'Edit Course'}
+								</Button>
+							</div>
 						</Form>
 					</Card>
 				</Container>

@@ -14,7 +14,7 @@ const DeleteModal = (props) => {
 
 	const handleOk = () => {
 		dispatch(deleteCourse(id));
-		history.push('/courses/');
+		history.push(props.linkTo);
 	};
 
 	return (

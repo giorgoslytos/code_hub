@@ -4,6 +4,7 @@ import { BsInfoSquareFill as InfoIcon } from 'react-icons/bs';
 import { TiTick, TiCancel } from 'react-icons/ti';
 import removeMarkupAndCrop from '../utils/removeMarkupAndCrop';
 import { Link } from 'react-router-dom';
+import DeleteModal from './DeleteModal';
 
 const DataTable = ({ data }) => {
 	const [tooltipOpen, setTooltipOpen] = useState();
@@ -76,6 +77,11 @@ const DataTable = ({ data }) => {
 								>
 									View Details
 								</Button>
+								<div className="d-inline-block ml-2">
+									<DeleteModal id={row.id} linkTo="/" buttonLabel="Delete">
+										Delete
+									</DeleteModal>
+								</div>
 							</td>
 						</tr>
 					))}
