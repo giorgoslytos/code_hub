@@ -22,7 +22,6 @@ const Course = () => {
 			try {
 				const res = await axios.get(`${URL}/courses/${id}`);
 				setCourse(res.data);
-				fetchInstructors();
 			} catch (err) {
 				setError(true);
 				console.log(err);
@@ -32,7 +31,6 @@ const Course = () => {
 
 	const fetchInstructors = async () => {
 		const promises = course?.instructors?.map((id) => {
-			console.log('enntered', id);
 			return axios.get(`${URL}/instructors/${id}`);
 		});
 		await axios
@@ -47,7 +45,6 @@ const Course = () => {
 
 	useEffect(() => {
 		fetchCourse();
-		console.log(history.location.course);
 	}, []);
 
 	useEffect(() => {
@@ -57,7 +54,8 @@ const Course = () => {
 	function handleEdit() {
 		history.push({
 			pathname: `/courses/edit/${id}`,
-			state: course,
+			course,
+			mode: 'edit',
 		});
 	}
 
