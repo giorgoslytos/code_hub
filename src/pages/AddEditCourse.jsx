@@ -53,8 +53,17 @@ const AddEditCourse = () => {
 	};
 
 	useEffect(() => {
-		if (!history.location.course) getCourse();
-		else setDataFetched(true);
+		console.log(history.location.course);
+		if (
+			!history.location.course &&
+			history.location.pathname !== '/courses/add'
+		) {
+			console.log('edit');
+			getCourse();
+		} else {
+			setDataFetched(true);
+			setError(false);
+		}
 	}, []);
 
 	const instructorsArr = [
