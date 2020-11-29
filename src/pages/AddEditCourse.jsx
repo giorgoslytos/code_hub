@@ -78,7 +78,9 @@ const AddEditCourse = () => {
 	return error ? (
 		<RecordNotFound />
 	) : (
-		<WithLoader loading={history.location.mode === 'edit' && !dataFetched}>
+		<WithLoader
+			loading={history.location.pathname !== '/courses/add' && !dataFetched}
+		>
 			<Formik
 				initialValues={{
 					title: history.location.course?.title,
