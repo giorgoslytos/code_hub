@@ -110,7 +110,7 @@ const AddEditCourse = () => {
 				innerRef={formikRef}
 				validationSchema={addEditvalidationSchema}
 			>
-				{({ errors, isSubmitting }) => (
+				{({ errors, touched, isSubmitting }) => (
 					<Container className="my-4">
 						<Card className="jumbotron">
 							<div className="h2 font-weight-normal">Add Course</div>
@@ -121,7 +121,7 @@ const AddEditCourse = () => {
 										type="text"
 										placeholder="Title"
 										name="title"
-										invalid={errors.title}
+										invalid={touched.title && errors.title}
 										as={Input}
 									/>
 									<FormFeedback>{errors.title}</FormFeedback>
@@ -132,7 +132,7 @@ const AddEditCourse = () => {
 										type="text"
 										placeholder="Duration"
 										name="duration"
-										invalid={errors.duration}
+										invalid={touched.duration && errors.duration}
 										as={Input}
 									/>
 									<FormFeedback>{errors.duration}</FormFeedback>
@@ -147,7 +147,7 @@ const AddEditCourse = () => {
 									/>
 								</FormGroup>
 								<FormGroup check>
-									<Label check>
+									<Label>
 										<Field type="checkbox" name="open" as={Input} />
 										Bookable
 									</Label>
@@ -157,7 +157,7 @@ const AddEditCourse = () => {
 								<FormGroup check>
 									{instructorsArr.map((instructor) => (
 										<div>
-											<Label check>
+											<Label>
 												<Field
 													type="checkbox"
 													name="instructors"
@@ -168,9 +168,13 @@ const AddEditCourse = () => {
 											</Label>
 										</div>
 									))}
-									<p className="text-danger">
-										<small>{errors.instructors}</small>
-									</p>
+									{touched.instructors ? (
+										<p className="text-danger">
+											<small>{errors.instructors}</small>
+										</p>
+									) : (
+										''
+									)}
 								</FormGroup>
 								<hr />
 								<FormGroup>
@@ -179,7 +183,7 @@ const AddEditCourse = () => {
 										type="textarea"
 										name="description"
 										as={Input}
-										invalid={errors.description}
+										invalid={touched.description && errors.description}
 									/>
 									<FormFeedback>{errors.description}</FormFeedback>
 								</FormGroup>
@@ -191,7 +195,9 @@ const AddEditCourse = () => {
 										type="date"
 										name="dates.start_date"
 										placeholder="date placeholder"
-										invalid={errors.dates?.start_date}
+										invalid={
+											touched.dates?.start_date && errors.dates?.start_date
+										}
 										as={Input}
 									/>
 									<FormFeedback>{errors.dates?.start_date}</FormFeedback>
@@ -202,7 +208,7 @@ const AddEditCourse = () => {
 										type="date"
 										name="dates.end_date"
 										placeholder="date placeholder"
-										invalid={errors.dates?.end_date}
+										invalid={touched.dates?.end_date && errors.dates?.end_date}
 										as={Input}
 									/>
 									<FormFeedback>{errors.dates?.end_date}</FormFeedback>
@@ -215,7 +221,9 @@ const AddEditCourse = () => {
 										type="number"
 										name="price.early_bird"
 										placeholder={0}
-										invalid={errors.price?.early_bird}
+										invalid={
+											touched.price?.early_bird && errors.price?.early_bird
+										}
 										as={Input}
 									/>
 									<FormFeedback>{errors.price?.early_bird}</FormFeedback>
@@ -226,7 +234,7 @@ const AddEditCourse = () => {
 										type="number"
 										name="price.normal"
 										placeholder={0}
-										invalid={errors.price?.normal}
+										invalid={touched.price?.normal && errors.price?.normal}
 										as={Input}
 									/>
 									<FormFeedback>{errors.price?.normal}</FormFeedback>
@@ -241,7 +249,6 @@ const AddEditCourse = () => {
 										className="ml-2"
 										disabled={isSubmitting}
 										color="primary float-right"
-										disabled={Object.keys(errors).length !== 0}
 									>
 										{history.location.pathname === '/courses/add'
 											? 'Add Course'
