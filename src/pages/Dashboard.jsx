@@ -39,7 +39,11 @@ const Dashboard = () => {
 				</WithLoader>
 			</Row>
 			<WithLoader loading={courses?.loading}>
-				<DataTable data={courses.data.slice(0, 5)} />
+				<DataTable
+					data={courses.data
+						.sort((a, b) => (a.dates.start_date > b.dates.start_date ? -1 : 1))
+						.slice(0, 5)}
+				/>
 			</WithLoader>
 		</div>
 	);
