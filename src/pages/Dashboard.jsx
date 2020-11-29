@@ -38,7 +38,7 @@ const Dashboard = () => {
 					))}
 				</WithLoader>
 			</Row>
-			<WithLoader loading={courses?.loading}>
+			<WithLoader loading={courses?.loading && !courses.fetched}>
 				<DataTable
 					data={courses.data
 						.sort((a, b) =>
