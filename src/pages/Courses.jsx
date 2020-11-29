@@ -17,7 +17,7 @@ import LazyImage from '../components/LazyImage';
 import WithLoader from '../components/WithLoader';
 import { fetchCourses } from '../redux/actions/coursesActions';
 
-const SingleCourse = ({ course, courses }) => {
+const SingleCourse = ({ course }) => {
 	const ref = useRef();
 	return (
 		<Card>

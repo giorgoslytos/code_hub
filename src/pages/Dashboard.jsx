@@ -40,7 +40,7 @@ const Dashboard = () => {
 			</Row>
 			<WithLoader loading={courses?.loading && !courses.fetched}>
 				<DataTable
-					data={courses.data
+					data={[...courses.data]
 						.sort((a, b) =>
 							Date.parse(a.dates.start_date) > Date.parse(b.dates.start_date)
 								? -1
