@@ -11,7 +11,7 @@ import {
 	NavbarToggler,
 } from 'reactstrap';
 
-const NavbarComponent = (props) => {
+const Navigation = (props) => {
 	const [collapsed, setCollapsed] = useState(true);
 
 	const footerStyle = {
@@ -54,4 +54,4 @@ const NavbarComponent = (props) => {
 	);
 };
 
-export default NavbarComponent;
+export default Navigation;

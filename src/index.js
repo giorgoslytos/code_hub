@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard';
 import NotFoundPage from './pages/NotFoundPage';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
-import Container from './components/Container';
+import Navigation from './components/Navigation';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import Courses from './pages/Courses';
@@ -15,7 +15,7 @@ import AddEditCourse from './pages/AddEditCourse';
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<Container>
+			<Navigation>
 				<Switch>
 					<Route exact path={['/', '/homepage']} component={Dashboard} />
 					<Route exact path={'/courses'} component={Courses} />
@@ -32,7 +32,7 @@ ReactDOM.render(
 					<Route path={'/courses/:id'} component={Course} />
 					<Route exact component={NotFoundPage} />
 				</Switch>
-			</Container>
+			</Navigation>
 		</Router>
 	</Provider>,
 	document.getElementById('root')
